@@ -13,8 +13,11 @@ void SettingsRepository::load(SettingsModel *model)
 {
     QSettings settings("TheFifthContinent", "Studio");
 
-    settings.beginGroup("Paths");
-    model->dataDirectory(settings.value("datadir").toString());
+    settings.beginGroup("server");
+    model->server(settings.value("server").toString());
+    model->database(settings.value("database").toString());
+    model->user(settings.value("user").toString());
+    model->password(settings.value("password").toString());
     settings.endGroup();
 
     settings.beginGroup("Flags");
@@ -26,8 +29,11 @@ void SettingsRepository::save(SettingsModel *model)
 {
     QSettings settings("TheFifthContinent", "Studio");
 
-    settings.beginGroup("Paths");
-    settings.setValue("datadir", model->dataDirectory());
+    settings.beginGroup("server");
+    settings.setValue("server", model->server());
+    settings.setValue("database", model->database());
+    settings.setValue("user", model->user());
+    settings.setValue("password", model->password());
     settings.endGroup();
 
     settings.beginGroup("Flags");
