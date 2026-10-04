@@ -3,14 +3,29 @@
 
 #include <QSettings>
 
-SettingsModel::SettingsModel() : SettingsModel { "", true } {}
+SettingsModel::SettingsModel() : SettingsModel { "", "", "", "", true } {}
 
-SettingsModel::SettingsModel(const QString &dataDirectory, const bool showWarnings) :
-    mDataDirectory {dataDirectory}, mShowWarnings {showWarnings} {}
+SettingsModel::SettingsModel(const QString &server, const QString &database, const QString &user, const QString &password, const bool showWarnings) :
+    mServer {server}, mDatabase {database}, mUser {user}, mPassword {password}, mShowWarnings {showWarnings} {}
 
-QString SettingsModel::dataDirectory()
+QString SettingsModel::server()
 {
-    return mDataDirectory;
+    return mServer;
+}
+
+QString SettingsModel::database()
+{
+    return mDatabase;
+}
+
+QString SettingsModel::user()
+{
+    return mUser;
+}
+
+QString SettingsModel::password()
+{
+    return mPassword;
 }
 
 bool SettingsModel::showWarnings()
@@ -18,9 +33,24 @@ bool SettingsModel::showWarnings()
     return mShowWarnings;
 }
 
-void SettingsModel::dataDirectory(const QString &dataDirectory)
+void SettingsModel::server(const QString server)
 {
-    mDataDirectory = dataDirectory;
+    mServer = server;
+}
+
+void SettingsModel::database(const QString database)
+{
+    mDatabase = database;
+}
+
+void SettingsModel::user(const QString user) 
+{
+    mUser = user;
+}
+
+void SettingsModel::password(const QString password)
+{
+    mPassword = password;
 }
 
 void SettingsModel::showWarnings(bool showWarnings)

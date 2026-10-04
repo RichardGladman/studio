@@ -7,19 +7,28 @@ class SettingsModel
 {
 public:
     SettingsModel();
-    SettingsModel(const QString &dataDirectory, const bool showWarnings);
+    SettingsModel(const QString &server, const QString &database, const QString &user, const QString &password, const bool showWarnings);
 
-    QString dataDirectory();
+    QString server();
+    QString database();
+    QString user();
+    QString password();
     bool showWarnings();
 
-    void dataDirectory(const QString &dataDirectory);
+    void server(const QString server);
+    void database(const QString database);
+    void user(const QString user);
+    void password(const QString password);
     void showWarnings(bool show_warnings);
 	
     void load();
     void save();
 
 private:
-    QString mDataDirectory;
+    QString mServer;
+    QString mDatabase;
+    QString mUser;
+    QString mPassword;
     bool mShowWarnings;
 };
 
