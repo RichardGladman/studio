@@ -8,7 +8,7 @@
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent) 
 {
-	setWindowTitle("About tomato");
+	setWindowTitle("About Studio");
 	resize(400, 200);
 	
 	QHBoxLayout *mainLayout = new QHBoxLayout(this);
@@ -21,11 +21,11 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 	
 	QVBoxLayout *rightLayout = new QVBoxLayout(this);
 	
-	QLabel *titleLabel = new QLabel(tr("Project Manager"), this);
+	QLabel *titleLabel = new QLabel(tr("Studio"), this);
 	rightLayout->addWidget(titleLabel);
 	
 	QLabel *copyrightLabel = new QLabel(this);
-	copyrightLabel->setText("© 2026 Richard Gladman");
+	copyrightLabel->setText("© 2026 Richard Muir-Gladman");
 	rightLayout->addWidget(copyrightLabel);
 	
 	QLabel *licenceLabel = new QLabel(tr("Licensed under the GPLv3"), this);

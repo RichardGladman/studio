@@ -117,35 +117,35 @@ void MainWindow::createMenu()
 void ::MainWindow::handleSettingsAction()
 {
 	SettingsFrame *frame = new SettingsFrame(this);
-	setWindowTitle(tr("Project Manager:- Settings"));
+	setWindowTitle(tr("Studio:- Settings"));
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleProjectsAction()
 {
 	ProjectFrame *frame = new ProjectFrame(this);
-	setWindowTitle(tr("Project Manager:- Projects"));
+	setWindowTitle(tr("Studio:- Projects"));
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleTasksAction()
 {
 	TaskFrame *frame = new TaskFrame(this);
-	setWindowTitle("ProjectManager:- Tasks");
+	setWindowTitle("Studio:- Tasks");
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleProjectsTaskAction()
 {
 	ProjectTaskFrame *frame = new ProjectTaskFrame(this);
-	setWindowTitle("ProjectManager:- By Project and Tasks");
+	setWindowTitle("Studio:- By Project and Tasks");
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleByStartDateAction()
 {
 	ByStartDateFrame *frame = new ByStartDateFrame(this);
-	setWindowTitle("Project Manager:- By Start Date");
+	setWindowTitle("Studio:- By Start Date");
 	setCentralWidget(frame);
 }
 
