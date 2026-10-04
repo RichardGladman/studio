@@ -14,7 +14,10 @@ public:
     ~SettingsFrame();
 
 private:
-	QLineEdit *directoryLineEdit;
+	QLineEdit *serverLineEdit;
+    QLineEdit *databaseLineEdit;
+    QLineEdit *userLineEdit;
+    QLineEdit *passwordLineEdit;
 	QCheckBox *warningsCheckbox;
 
     void directoryButtonClicked();
