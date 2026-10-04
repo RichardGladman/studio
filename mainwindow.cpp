@@ -27,7 +27,7 @@ SettingsModel settings;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-	setWindowTitle("Project Manager");
+	setWindowTitle("Studio");
 	resize(600, 800);
 	
 	settings.load();
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	init->createStore(settings.dataDirectory());
 	
 	QSqlDatabase dbConnection = QSqlDatabase::addDatabase("QSQLITE");
-	dbConnection.setDatabaseName(settings.dataDirectory() + "/data/projects.dat");
+	dbConnection.setDatabaseName(settings.dataDirectory() + "/data/studio.dat");
 
 	if (!dbConnection.open()) {
 	    qDebug() << "Database connection error";

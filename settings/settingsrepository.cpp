@@ -11,7 +11,7 @@
 
 void SettingsRepository::load(SettingsModel *model)
 {
-    QSettings settings("TheFifthContinent", "ProjectManager");
+    QSettings settings("TheFifthContinent", "Studio");
 
     settings.beginGroup("Paths");
     model->dataDirectory(settings.value("datadir").toString());
@@ -24,7 +24,7 @@ void SettingsRepository::load(SettingsModel *model)
 
 void SettingsRepository::save(SettingsModel *model)
 {
-    QSettings settings("TheFifthContinent", "ProjectManager");
+    QSettings settings("TheFifthContinent", "Studio");
 
     settings.beginGroup("Paths");
     settings.setValue("datadir", model->dataDirectory());
