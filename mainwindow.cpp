@@ -31,17 +31,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	resize(600, 800);
 	
 	settings.load();
-	if (settings.dataDirectory().isEmpty()) {
+	if (settings.server().isEmpty()) {
 		handleSettingsAction();
-		QMessageBox::information(this, tr("Action Required"), tr("Please select a data directory"));
+		QMessageBox::information(this, tr("Action Required"), tr("Please enter server details"));
 		return;
 	}
 	
 	StoreInitialiser *init = new StoreInitialiser();
-	init->createStore(settings.dataDirectory());
 	
-	QSqlDatabase dbConnection = QSqlDatabase::addDatabase("QSQLITE");
-	dbConnection.setDatabaseName(settings.dataDirectory() + "/data/studio.dat");
+	QSqlDatabase dbConnection = QSqlDatabase::addDatabase("QMARIADB");
+	dbConnection.setHostName(settings.server());
+	dbConnection.setPort(3306);
+	dbConnection.setDatabaseName(settings.database());
+	dbConnection.setUserName(settings.user());
+	dbConnection.setPassword(settings.password());
 
 	if (!dbConnection.open()) {
 	    qDebug() << "Database connection error";
