@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
 project(studio LANGUAGES CXX)
 
-list(APPEND CMAKE_PREFIX_PATH "~/Qt/6.11.1/gcc_64")
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Sql)
+include_directories(${Qt6_INCLUDE_DIRS})
+
+list(APPEND CMAKE_PREFIX_PATH "/home/richard/Qt/6.12.0/gcc_64")
+find_package(Qt6 6.12 REQUIRED COMPONENTS Core Widgets Sql)
 
 qt_standard_project_setup()
 
@@ -25,6 +27,8 @@ qt_add_executable(studio
     settings/settingsmodel.h settings/settingsmodel.cpp
     settings/settingsrepository.h settings/settingsrepository.cpp
     settings/settingsframe.h settings/settingsframe.cpp
+    staff/staffmodel.h staff/staffmodel.cpp
+    staff/staffrepository.h staff/staffrepository.cpp
     tasks/taskmodel.h tasks/taskmodel.cpp
     tasks/taskrepository.h tasks/taskrepository.cpp
     tasks/taskform.h tasks/taskform.cpp
