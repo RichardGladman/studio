@@ -14,6 +14,7 @@
 
 class StaffRepository
 {
+public:
     static void createStore();
 
     static QList<ListData> list(QString searchFor, bool inactive = false);
