@@ -19,7 +19,7 @@ StaffModel StaffModel::load(int id)
     return StaffRepository::load(id);
 }
 
-StaffModel::StaffModel(QString name, EmployeeType type, double chargedAt, bool active, int id) :
+StaffModel::StaffModel(QString name, EmployeeType type, int chargedAt, bool active, int id) :
             mName {name}, mType {type}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
 
 int StaffModel::id() const
@@ -37,7 +37,7 @@ EmployeeType StaffModel::type() const
     return mType;
 }
 
-double StaffModel::chargedAt() const
+int StaffModel::chargedAt() const
 {
     return mChargedAt;
 }
@@ -62,7 +62,7 @@ void StaffModel::type(EmployeeType type)
     mType = type;
 }
 
-void StaffModel::chargedAt(double chargedAt)
+void StaffModel::chargedAt(int chargedAt)
 {
     mChargedAt = chargedAt;
 }
