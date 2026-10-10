@@ -21,5 +21,6 @@ private slots:
 	void handleAboutQtAction();
 	void handleProjectsTaskAction();
 	void handleByStartDateAction();
+	void handleStaffAction();
 };
 #endif // MAINWINDOW_H

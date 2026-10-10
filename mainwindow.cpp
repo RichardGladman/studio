@@ -7,12 +7,14 @@
 #include "mainwindow.h"
 #include "about/aboutdialog.h"
 #include "dbinitialiser.h"
+#include "qaction.h"
 #include "reports/bystartdateframe.h"
 #include "settings/settingsmodel.h"
 #include "settings/settingsframe.h"
 #include "projects/projectframe.h"
 #include "tasks/taskframe.h"
 #include "reports/projecttaskframe.h"
+#include "staff/staffframe.h"
 
 #include <QApplication>
 #include <QVBoxLayout>
@@ -39,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	StoreInitialiser *init = new StoreInitialiser();
 	
-	QSqlDatabase dbConnection = QSqlDatabase::addDatabase("QMARIADB");
+	QSqlDatabase dbConnection = QSqlDatabase::addDatabase("QMYSQL");
 	dbConnection.setHostName(settings.server());
 	dbConnection.setPort(3306);
 	dbConnection.setDatabaseName(settings.database());
@@ -83,6 +85,14 @@ void MainWindow::createMenu()
 	fileMenu->addAction(settingsAction);
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
+
+	QMenu *staffMenu = menuBar->addMenu(tr("&Stakeholders"));
+
+	QAction *staffAction = new QAction(tr("Staff"), this);
+
+	connect(staffAction, &QAction::triggered, this, &MainWindow::handleStaffAction);
+
+	staffMenu->addAction(staffAction);
 	
 	QMenu *projectsMenu = menuBar->addMenu(tr("&Projects"));
 	
@@ -162,4 +172,11 @@ void MainWindow::handleAboutAction()
 void MainWindow::handleAboutQtAction()
 {
 	QMessageBox::aboutQt(this, "About Qt");
+}
+
+void MainWindow::handleStaffAction()
+{
+	StaffFrame *frame = new StaffFrame(this);
+	setWindowTitle("Studio:- Staff");
+	setCentralWidget(frame);
 }
