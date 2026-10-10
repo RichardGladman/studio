@@ -72,6 +72,11 @@ void StaffForm::handleSaveButtonClicked()
         } else {
             QMessageBox::information(this, tr("Success"), name + tr(" saved"));
         }
+
+        mDefaultName = model.name();
+        mDefaultType = model.type();
+        mDefaultChargedAt = model.chargedAt();
+ 
     } else {
         QMessageBox::critical(this, tr("Error"), name + tr(" not saved"));
     }
