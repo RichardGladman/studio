@@ -20,6 +20,7 @@ public:
 	static StaffModel load(int id);
 
 	StaffModel(QString name, EmployeeType type, int chargedAt, bool active, int id = 0);
+	StaffModel();
 
 	int id() const;
 	QString name() const;

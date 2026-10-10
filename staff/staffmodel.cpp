@@ -21,6 +21,7 @@ StaffModel StaffModel::load(int id)
 
 StaffModel::StaffModel(QString name, EmployeeType type, int chargedAt, bool active, int id) :
             mName {name}, mType {type}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
+StaffModel::StaffModel() : mName {""}, mType {-1}, mChargedAt {0}, mActive {1}, mId {0} {}
 
 int StaffModel::id() const
 {
