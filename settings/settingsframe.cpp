@@ -30,6 +30,7 @@ SettingsFrame::SettingsFrame(QWidget *parent) : QFrame(parent)
 
 	passwordLineEdit = new QLineEdit(this);
     passwordLineEdit->setText(settings.password());
+    passwordLineEdit->setEchoMode(QLineEdit::Password);
     mainLayout->addWidget(passwordLineEdit);
 	
 	warningsCheckbox = new QCheckBox(this);
