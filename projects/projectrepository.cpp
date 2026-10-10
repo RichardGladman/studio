@@ -12,7 +12,7 @@
 
 void ProjectRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name VARCHAR(255), description TEXT, active INTEGER);";
+	QString sql = "CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), description TEXT, active INTEGER);";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
