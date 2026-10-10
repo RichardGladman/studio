@@ -3,8 +3,9 @@ project(studio LANGUAGES CXX)
 
 include_directories(${Qt6_INCLUDE_DIRS})
 
-list(APPEND CMAKE_PREFIX_PATH "/home/richard/Qt/6.12.0/gcc_64")
-find_package(Qt6 6.12 REQUIRED COMPONENTS Core Widgets Sql)
+list(APPEND CMAKE_PREFIX_PATH "/home/richard/Qt/6.11.2")
+find_package(Qt6 6.11 REQUIRED COMPONENTS Core Widgets Sql)
+find_package(MySQL REQUIRED)
 
 qt_standard_project_setup()
 
@@ -27,6 +28,8 @@ qt_add_executable(studio
     settings/settingsmodel.h settings/settingsmodel.cpp
     settings/settingsrepository.h settings/settingsrepository.cpp
     settings/settingsframe.h settings/settingsframe.cpp
+    staff/staffform.h staff/staffform.cpp
+    staff/staffframe.h staff/staffframe.cpp
     staff/staffmodel.h staff/staffmodel.cpp
     staff/staffrepository.h staff/staffrepository.cpp
     tasks/taskmodel.h tasks/taskmodel.cpp
@@ -43,6 +46,7 @@ target_link_libraries(studio
         Qt::Core
         Qt::Widgets
         Qt::Sql
+        mysqlclient
 )
 
 install(TARGETS studio
