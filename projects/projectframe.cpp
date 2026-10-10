@@ -57,6 +57,10 @@ ProjectFrame::ProjectFrame(QWidget* parent) : QFrame(parent)
 	QPushButton *deleteButton = new QPushButton(tr("Deactivate"), this);
 	connect(deleteButton, &QPushButton::clicked, this, &ProjectFrame::handleDeleteClicked);
 	controlLayout->addWidget(deleteButton);
+
+	QPushButton *teamButton = new QPushButton(tr("Team"), this);
+	connect(teamButton, &QPushButton::clicked, this, &ProjectFrame::handleTeamClicked);
+	controlLayout->addWidget(teamButton);
 	
 	mainLayout->addWidget(listWidget);
 	mainLayout->addLayout(controlLayout);
@@ -113,6 +117,11 @@ void ProjectFrame::handleDeleteClicked()
 	} else {
 		QMessageBox::critical(this, "Error", "Project not deactivated");
 	}
+}
+
+void ProjectFrame::handleTeamClicked()
+{
+
 }
 
 void ProjectFrame::loadData(QString searchFor, bool inactive)

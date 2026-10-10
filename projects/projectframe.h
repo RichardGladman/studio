@@ -26,6 +26,7 @@ private:
 	void handleAddClicked();
 	void handleEditClicked();
 	void handleDeleteClicked();
+	void handleTeamClicked();
 	
 	void loadData(QString searchFor = "", bool inactive = false);
 };
