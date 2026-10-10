@@ -38,6 +38,8 @@ qt_add_executable(studio
     tasks/taskframe.h tasks/taskframe.cpp
     tasktimer/tasktimermodel.h tasktimer/tasktimermodel.cpp
     tasktimer/tasktimerrepository.h tasktimer/tasktimerrepository.cpp
+    teams/teammodel.h teams/teammodel.cpp
+    teams/teamrepository.h teams/teamrepository.cpp
     
 )
 
