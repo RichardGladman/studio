@@ -13,7 +13,7 @@
 
 void StaffRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS staff (id INTEGER PRIMARY KEY, name VARCHAR(255), member_type INTEGER, "
+	QString sql = "CREATE TABLE IF NOT EXISTS staff (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), member_type INTEGER, "
 					"charged_at INTEGER, active INTEGER);";
 	QSqlQuery query;
 	query.prepare(sql);
@@ -71,7 +71,7 @@ bool StaffRepository::insert(StaffModel *model)
 { 
 	QSqlQuery query;
 	
-	query.prepare("INSERT INTO staff(name, member_type, chargedAt, active) VALUES(?, ?, ?, ?, 1)");
+	query.prepare("INSERT INTO staff(name, member_type, charged_at, active) VALUES(?, ?, ?, 1)");
 	
 	query.addBindValue(model->name());
 	query.addBindValue(static_cast<int>(model->type()));
