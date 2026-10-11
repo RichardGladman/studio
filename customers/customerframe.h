@@ -1,5 +1,5 @@
 /* =====================================
- *	staffframe.h
+ *	customerframe.h
  *  Richard Muir-Gladman (c) 2026
  *
  *	Licence GPLv3

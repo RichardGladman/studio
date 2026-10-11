@@ -1,5 +1,5 @@
 /* =====================================
- *	frame.cpp
+ *	customerframe.cpp
  *  Richard Muir-Gladman (c) 2026
  *
  *	Licence GPLv3
