@@ -15,6 +15,7 @@
 #include "tasks/taskframe.h"
 #include "reports/projecttaskframe.h"
 #include "staff/staffframe.h"
+#include "customers/customerframe.h"
 
 #include <QApplication>
 #include <QVBoxLayout>
@@ -86,13 +87,16 @@ void MainWindow::createMenu()
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
 
-	QMenu *staffMenu = menuBar->addMenu(tr("&Stakeholders"));
+	QMenu *stakeholderMenu = menuBar->addMenu(tr("&Stakeholders"));
 
+	QAction *customerAction = new QAction(tr("Customers"), this);
 	QAction *staffAction = new QAction(tr("Staff"), this);
 
+	connect(customerAction, &QAction::triggered, this, &MainWindow::handleCustomerAction);
 	connect(staffAction, &QAction::triggered, this, &MainWindow::handleStaffAction);
 
-	staffMenu->addAction(staffAction);
+	stakeholderMenu->addAction(customerAction);
+	stakeholderMenu->addAction(staffAction);
 	
 	QMenu *projectsMenu = menuBar->addMenu(tr("&Projects"));
 	
@@ -178,5 +182,12 @@ void MainWindow::handleStaffAction()
 {
 	StaffFrame *frame = new StaffFrame(this);
 	setWindowTitle("Studio:- Staff");
+	setCentralWidget(frame);
+}
+
+void MainWindow::handleCustomerAction()
+{
+	CustomerFrame *frame = new CustomerFrame();
+	setWindowTitle(tr("Studio:- Customers"));
 	setCentralWidget(frame);
 }
