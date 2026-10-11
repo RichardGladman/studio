@@ -9,8 +9,10 @@
 
 #include <QString>
 #include <QStringList>
+#include <QtCore/qobject.h>
 
 #include "../common/listdata.h"
+#include "../common/address.h"
 
 class CustomerModel
 {
@@ -18,18 +20,22 @@ public:
 	static QList<ListData> list(QString searchFor, bool inactive);
 	static CustomerModel load(int id);
 
-	CustomerModel(QString name, int chargedAt, bool active, int id = 0);
+	CustomerModel(QString name, Address address, QString phoneNumber, QString email, bool active, int id = 0);
 	CustomerModel();
 
 	int id() const;
 	QString name() const;
-	int chargedAt() const;
+	Address address() const;
+	QString phoneNumber() const;
+	QString email() const;
 	bool active() const;
 
 	void id(const int id);
 	void name(const QString name);
-	void chargedAt(int chargedAt);
-	void active(bool active);
+	void address(const Address address);
+	void phoneNumber(const QString phoneNumber);
+	void email(const QString email);
+	void active(const bool active);
 
 	bool save();
 	bool activate();
@@ -38,6 +44,8 @@ public:
 private:
 	int mId;
 	QString mName;
-	int mChargedAt;
+	Address mAddress;
+	QString mPhoneNumber;
+	QString mEmail;
 	bool mActive;
 };

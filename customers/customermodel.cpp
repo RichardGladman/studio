@@ -7,6 +7,7 @@
 
 #include "customermodel.h"
 #include "customerrepository.h"
+#include <cstddef>
 
 QList<ListData> CustomerModel::list(QString searchFor, bool inactive)
 {
@@ -18,9 +19,9 @@ CustomerModel CustomerModel::load(int id)
     return CustomerRepository::load(id);
 }
 
-CustomerModel::CustomerModel(QString name, int chargedAt, bool active, int id) :
-            mName {name}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
-CustomerModel::CustomerModel() : mName {""}, mChargedAt {0}, mActive {1}, mId {0} {}
+CustomerModel::CustomerModel(QString name, Address address, QString phoneNumber, QString email, bool active, int id) :
+            mName(name), mAddress(address), mPhoneNumber(phoneNumber), mEmail(email), mActive(active), mId(id) {}
+CustomerModel::CustomerModel() : CustomerModel("", address(), "", "", 1, 0) {}
 
 int CustomerModel::id() const
 {
@@ -32,9 +33,19 @@ QString CustomerModel::name() const
     return mName;
 }
 
-int CustomerModel::chargedAt() const
+Address CustomerModel::address() const
 {
-    return mChargedAt;
+    return mAddress;
+}
+
+QString CustomerModel::phoneNumber() const 
+{
+    return mPhoneNumber;
+}
+
+QString CustomerModel::email() const
+{
+    return mEmail;
 }
 
 bool CustomerModel::active() const
@@ -52,9 +63,19 @@ void CustomerModel::name(const QString name)
     mName = name;
 }
 
-void CustomerModel::chargedAt(int chargedAt)
+void CustomerModel::address(const Address address)
 {
-    mChargedAt = chargedAt;
+    mAddress = address;
+}
+
+void CustomerModel::phoneNumber(const QString phoneNumber)
+{
+    mPhoneNumber = phoneNumber;
+}
+
+void CustomerModel::email(const QString email)
+{
+    mEmail = email;
 }
 
 void CustomerModel::active(bool active)
