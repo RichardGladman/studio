@@ -7,7 +7,6 @@
 
 #include "customermodel.h"
 #include "customerrepository.h"
-#include <cstddef>
 
 QList<ListData> CustomerModel::list(QString searchFor, bool inactive)
 {
