@@ -14,7 +14,7 @@
 
 class TeamModel
 {
-	static QList<ListData> list(QString searchFor, bool inactive);
+public:
 	static TeamModel load(int id);
 
 	TeamModel(int staffId, int proectId);
@@ -22,12 +22,21 @@ class TeamModel
 
 	int staffId() const;
     int projectId() const;
+	int role() const;
+	bool active() const;
 
 	void staffId(const int staffId);
     void projectId(const int projectId);
+	void role(const int role);
+	void active(bool active);
 
 	bool save();
 	bool activate();
 	bool deactivate();
 
+private:
+	int mStaffId;
+	int mProjectId;
+	int mRole;
+	int mActive;
 };
