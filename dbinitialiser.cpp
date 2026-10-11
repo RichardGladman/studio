@@ -6,6 +6,7 @@
  * ===================================== */
 
 #include "dbinitialiser.h"
+#include "customers/customerrepository.h"
 #include "projects/projectrepository.h"
 #include "staff/staffrepository.h"
 #include "tasks/taskrepository.h"
@@ -22,4 +23,5 @@ void StoreInitialiser::createDataTables()
 	TaskTimerRepository::createStore();
 	StaffRepository::createStore();
 	TeamRepository::createStore();
+	CustomerRepository::createStore();
 }
