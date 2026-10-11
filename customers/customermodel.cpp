@@ -63,7 +63,7 @@ void CustomerModel::name(const QString name)
     mName = name;
 }
 
-void CustomerModel::address(const Address address)
+void CustomerModel::address(const AddressModel address)
 {
     mAddress = address;
 }
