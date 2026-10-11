@@ -7,6 +7,7 @@
 
 #include "customermodel.h"
 #include "customerrepository.h"
+#include "../address/addressmodel.h"
 
 QList<ListData> CustomerModel::list(QString searchFor, bool inactive)
 {
@@ -18,7 +19,7 @@ CustomerModel CustomerModel::load(int id)
     return CustomerRepository::load(id);
 }
 
-CustomerModel::CustomerModel(QString name, Address address, QString phoneNumber, QString email, bool active, int id) :
+CustomerModel::CustomerModel(QString name, AddressModel address, QString phoneNumber, QString email, bool active, int id) :
             mName(name), mAddress(address), mPhoneNumber(phoneNumber), mEmail(email), mActive(active), mId(id) {}
 CustomerModel::CustomerModel() : CustomerModel("", address(), "", "", 1, 0) {}
 
@@ -32,7 +33,7 @@ QString CustomerModel::name() const
     return mName;
 }
 
-Address CustomerModel::address() const
+AddressModel CustomerModel::address() const
 {
     return mAddress;
 }
