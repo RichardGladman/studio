@@ -10,7 +10,7 @@
 #include <QString>
 #include <QStringList>
 
-#include "../common/listdata.h"
+#include "../staff/staffrole.h"
 
 class TeamModel
 {
@@ -22,12 +22,12 @@ public:
 
 	int staffId() const;
     int projectId() const;
-	int role() const;
+	StaffRole role() const;
 	bool active() const;
 
 	void staffId(const int staffId);
     void projectId(const int projectId);
-	void role(const int role);
+	void role(const StaffRole role);
 	void active(bool active);
 
 	bool save();

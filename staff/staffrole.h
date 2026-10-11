@@ -3,7 +3,7 @@
 //
 #pragma once
 
-enum class StaffRoles
+enum class StaffRole
 {
     Admin, Designer, Developer, Tester, ProjectManager, Sales
 };
