@@ -1,7 +1,8 @@
-#include "projectframe.h"
 #include "projectmodel.h"
-#include "../common/listdata.h"
 #include "projectform.h"
+#include "projectframe.h"
+#include "../common/listdata.h"
+#include "../teams/teamframe.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -121,7 +122,15 @@ void ProjectFrame::handleDeleteClicked()
 
 void ProjectFrame::handleTeamClicked()
 {
+	if (listWidget->currentItem() == nullptr) return;
+	
+	int id = listWidget->currentItem()->data(Qt::UserRole).toInt();
+	ProjectModel model = ProjectModel::load(id);
 
+	TeamFrame *dialog = new TeamFrame(this, id);
+	dialog->setFixedSize(540, 720);
+	dialog->setWindowTitle(tr("Studio:- Team Members for ") + model.name());
+	dialog->exec();
 }
 
 void ProjectFrame::loadData(QString searchFor, bool inactive)

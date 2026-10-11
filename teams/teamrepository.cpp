@@ -6,7 +6,9 @@
  * ===================================== */
 
 #include "teamrepository.h"
+#include "qdebug.h"
 #include "qsqlquery.h"
+#include "teamdata.h"
 #include "teammodel.h"
 
 #include <QSqlQuery>
@@ -14,11 +16,11 @@
 void TeamRepository::createStore()
 {
     QString sql = "CREATE TABLE IF NOT EXISTS projects_staff ("
+                    "id INTEGER PRIMARY KEY AUTO_INCREMENT,"
                     "staff_id INTEGER," 
                     "project_id INTEGER,"
                     "role INTEGER,"
                    " active INTEGER,"
-                    "PRIMARY KEY(staff_id, project_id),"
                     "FOREIGN KEY (staff_id) REFERENCES staff(id),"
                     "FOREIGN KEY (project_id) REFERENCES projects(id)"
                 ");";
@@ -28,20 +30,42 @@ void TeamRepository::createStore()
     query.exec();
 }
 
-TeamModel TeamRepository::load(int staffId, int projectId)
+QList<TeamData> TeamRepository::list(int projectId, bool inactive)
+{
+    QString sql = "SELECT ps.id, s.id, s.name FROM staff s INNER JOIN projects_staff ps ON s.id = ps.staff_id "
+                    "WHERE ps.project_id=? AND ps.active=? ORDER BY s.name";
+    QSqlQuery query;
+
+    query.prepare(sql);
+    query.addBindValue(projectId);
+    query.addBindValue(!inactive);
+
+    query.exec();
+
+    QList<TeamData> team;
+
+    while (query.next()) {
+        TeamData data { query.value(0).toInt(),query.value(1).toInt(), query.value(2).toString()};
+        team.push_back(data);
+    }
+
+    return team;
+}
+
+TeamModel TeamRepository::load(int id)
 {
     TeamModel model {};
     QSqlQuery query;
 
-    query.prepare("SELECT * FROM projects_staff WHERE staff_id=? AND project_id=?");
-    query.addBindValue(staffId);
-    query.addBindValue(projectId);
+    query.prepare("SELECT * FROM projects_staff WHERE id=?");
+    query.addBindValue(id);
 
     if (query.exec() && query.next()) {
-        model.staffId(query.value(0).toInt());
-        model.projectId(query.value(1).toInt());
-        model.role(static_cast<StaffRole>(query.value(2).toInt()));
-        model.active(query.value(3).toBool());
+        model.id(query.value(0).toInt());
+        model.staffId(query.value(1).toInt());
+        model.projectId(query.value(2).toInt());
+        model.role(static_cast<StaffRole>(query.value(3).toInt()));
+        model.active(query.value(4).toBool());
     }
 
     return model;
@@ -57,6 +81,8 @@ bool TeamRepository::insert(TeamModel *model)
     query.addBindValue(model->projectId());
     query.addBindValue(model->staffId());
     query.addBindValue(static_cast<int>(model->role()));
+
+    qDebug() << sql << " " << QString::number(model->projectId()) << " " << QString::number(model->staffId()) << " " << QString::number(static_cast<int>(model->role()));
 
     return query.exec();
 }

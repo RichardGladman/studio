@@ -3,13 +3,13 @@ project(studio LANGUAGES CXX)
 
 include_directories(${Qt6_INCLUDE_DIRS})
 
-list(APPEND CMAKE_PREFIX_PATH "/home/richard/Qt/6.11.2")
-find_package(Qt6 6.11 REQUIRED COMPONENTS Core Widgets Sql)
+list(APPEND CMAKE_PREFIX_PATH "/home/richard/Qt/6.12.0")
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Sql)
 find_package(MySQL REQUIRED)
 
 qt_standard_project_setup()
 
-set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTORCC ON) 
 
 qt_add_executable(studio
     WIN32 MACOSX_BUNDLE
@@ -38,6 +38,8 @@ qt_add_executable(studio
     tasks/taskframe.h tasks/taskframe.cpp
     tasktimer/tasktimermodel.h tasktimer/tasktimermodel.cpp
     tasktimer/tasktimerrepository.h tasktimer/tasktimerrepository.cpp
+    teams/teamform.h teams/teamform.cpp
+    teams/teamframe.h teams/teamframe.cpp
     teams/teammodel.h teams/teammodel.cpp
     teams/teamrepository.h teams/teamrepository.cpp
     

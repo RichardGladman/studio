@@ -14,7 +14,8 @@ class TeamRepository
 public:
     static void createStore();
 
-    static TeamModel load(int staffId, int projectId);
+    static QList<TeamData> list(int projectId, bool inactive = false);
+    static TeamModel load(int id);
 
     static bool insert(TeamModel *model);
     static bool update(TeamModel *model);

@@ -8,15 +8,25 @@
 #include "teamrepository.h"
 #include "../staff/staffrole.h"
 
+#include <QDebug>
 
-TeamModel TeamModel::load(int staffId, int projectId)
+QList<TeamData> TeamModel::list(int projectId, bool inactive)
 {
-    return TeamRepository::load(staffId, projectId);
+    return TeamRepository::list(projectId, inactive);
 }
 
-TeamModel::TeamModel(int staffId, int projectId, StaffRole role, int active):  
-                        mStaffId(staffId), mProjectId(projectId), mRole(role), mActive(active) {}
-TeamModel::TeamModel(): TeamModel(0, 0, StaffRole::ProjectManager, 1) {}
+TeamModel TeamModel::load(int id)
+{
+    return TeamRepository::load(id);
+}
+
+TeamModel::TeamModel(int staffId, int projectId, StaffRole role, bool active, int id):  
+                        mStaffId(staffId), mProjectId(projectId), mRole(role), mActive(active), mId(id) {}
+TeamModel::TeamModel(): TeamModel(0, 0, StaffRole::None, 1, 0) {}
+
+int TeamModel::id() const{
+    return mId;
+}
 
 int TeamModel::staffId() const
 {
@@ -38,6 +48,10 @@ bool TeamModel::active() const
     return mActive;
 }
 
+void TeamModel::id(const int id)
+{
+    mId = id;
+}
 
 void TeamModel::staffId(const int staffId)
 {
@@ -61,7 +75,8 @@ void TeamModel::active(bool active)
 
 bool TeamModel::save()
 {
-    if (mStaffId == 0 && mProjectId == 0) {
+    qDebug() << QString::number(mProjectId) << " " << QString::number(mStaffId);
+    if (mId == 0) {
         return TeamRepository::insert(this);
     } else {
         return TeamRepository::update(this);
