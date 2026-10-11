@@ -5,5 +5,5 @@
 
 enum class StaffRole
 {
-    Admin, Designer, Developer, Tester, ProjectManager, Sales
+    Admin, Designer, Developer, Tester, ProjectManager, Sales, Support
 };

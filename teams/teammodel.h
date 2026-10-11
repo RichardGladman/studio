@@ -15,9 +15,9 @@
 class TeamModel
 {
 public:
-	static TeamModel load(int id);
+	static TeamModel load(int staffId, int projectId);
 
-	TeamModel(int staffId, int proectId);
+	TeamModel(int staffId, int projectId, StaffRole role, int active);
 	TeamModel();
 
 	int staffId() const;
@@ -37,6 +37,6 @@ public:
 private:
 	int mStaffId;
 	int mProjectId;
-	int mRole;
+	StaffRole mRole;
 	int mActive;
 };

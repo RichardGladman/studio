@@ -10,6 +10,7 @@
 #include "staff/staffrepository.h"
 #include "tasks/taskrepository.h"
 #include "tasktimer/tasktimerrepository.h"
+#include "teams/teamrepository.h"
 
 #include <QDir>
 #include <QDebug>
@@ -20,4 +21,5 @@ void StoreInitialiser::createDataTables()
 	TaskRepository::createStore();
 	TaskTimerRepository::createStore();
 	StaffRepository::createStore();
+	TeamRepository::createStore();
 }
