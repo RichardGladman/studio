@@ -8,6 +8,7 @@
 #include "customerform.h"
 #include "customermodel.h"
 
+#include "../address/addressmodel.h"
 #include "../settings/settingsmodel.h"
 
 #include <QHBoxLayout>
@@ -21,22 +22,48 @@ extern SettingsModel settings;
 
 CustomerForm::CustomerForm(QWidget* parent, int id, QString mode)
     : QDialog(parent)
-    , mDefaultName { "" }
+    , mDefaultName("")
+    , mDefaultStreet("")
+    , mDefaultArea("")
+    , mDefaultTown("")
+    , mDefaultCounty("")
+    , mDefaultPostcode("")
+    , mDefaultPhone("")
+    , mDefaultEmail("")
 {
     setupUI();
 
     if (id != 0) {
+        qCritical() << "HERE";
         CustomerModel model = CustomerModel::load(id);
         nameLineEdit->setText(model.name());
-        chargedAtLineEdit->setText(QString::number(model.chargedAt()));
+        streetLineEdit->setText(model.address().streetAddress());
+        areaLineEdit->setText(model.address().area());
+        townLineEdit->setText(model.address().town());
+        countyLineEdit->setText(model.address().county());
+        postcodeLineEdit->setText(model.address().postcode());
+        phoneLineEdit->setText(model.phoneNumber());
+        emailLineEdit->setText(model.email());
         mId = id;
         mDefaultName = model.name();
-        mDefaultChargedAt = model.chargedAt();
+        mDefaultStreet = model.address().streetAddress();
+        mDefaultArea = model.address().area();
+        mDefaultTown = model.address().town();
+        mDefaultCounty = model.address().county();
+        mDefaultPostcode = model.address().postcode();
+        mDefaultPhone = model.phoneNumber();
+        mDefaultEmail = model.email();
     }
 
     if (mode == "view") {
         nameLineEdit->setReadOnly(true);
-        chargedAtLineEdit->setReadOnly(true);
+        streetLineEdit->setReadOnly(true);
+        areaLineEdit->setReadOnly(true);
+        townLineEdit->setReadOnly(true);
+        countyLineEdit->setReadOnly(true);
+        postcodeLineEdit->setReadOnly(true);
+        phoneLineEdit->setReadOnly(true);
+        emailLineEdit->setReadOnly(true);
         saveButton->setVisible(false);
         saveButton->setEnabled(false);
     }
@@ -45,27 +72,49 @@ CustomerForm::CustomerForm(QWidget* parent, int id, QString mode)
 void CustomerForm::handleSaveButtonClicked()
 {
     QString name = nameLineEdit->text();
-    int chargedAt = chargedAtLineEdit->text().toInt();
-    
+    QString street = streetLineEdit->text();
+    QString area = areaLineEdit->text();
+    QString town = townLineEdit->text();
+    QString county = countyLineEdit->text();
+    QString postcode = postcodeLineEdit->text();
+    QString phone = phoneLineEdit->text();
+    QString email = emailLineEdit->text();
 
-    if (name.isEmpty()) {
-        QMessageBox::critical(this, tr("Input Error"), tr("Name must not be empty"));
+    if (name.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
+        QMessageBox::critical(this, tr("Input Error"), tr("Name, street, and postcode must not be empty"));
         return;
     }
 
-    CustomerModel model { name, chargedAt, 1, mId };
+    if (phone.isEmpty() || email.isEmpty()) {
+        QMessageBox::critical(this, tr("Input Error"), tr("Phone and email must not be empty"));
+        return;
+    }
+
+    AddressModel address {street, area, town, county, postcode};
+    CustomerModel model { name, address, phone, email, 1, mId };
 
     if (model.save()) {
         if (mId == 0) {
             nameLineEdit->clear();
-            chargedAtLineEdit->clear();
+            streetLineEdit->clear();
+            areaLineEdit->clear();
+            townLineEdit->clear();
+            countyLineEdit->clear();
+            postcodeLineEdit->clear();
+            phoneLineEdit->clear();
+            emailLineEdit->clear();
         } else {
             QMessageBox::information(this, tr("Success"), name + tr(" saved"));
         }
 
         mDefaultName = model.name();
-        mDefaultChargedAt = model.chargedAt();
- 
+        mDefaultStreet = model.address().streetAddress();
+        mDefaultArea = model.address().area();
+        mDefaultTown = model.address().town();
+        mDefaultCounty = model.address().county();
+        mDefaultPostcode = model.address().postcode();
+        mDefaultPhone = model.phoneNumber();
+        mDefaultEmail = model.email();
     } else {
         QMessageBox::critical(this, tr("Error"), name + tr(" not saved"));
     }
@@ -73,7 +122,10 @@ void CustomerForm::handleSaveButtonClicked()
 
 void CustomerForm::handleCloseButtonClicked()
 {
-    if (settings.showWarnings() && (nameLineEdit->text() != mDefaultName|| chargedAtLineEdit->text().toInt() != mDefaultChargedAt)) {
+    if (settings.showWarnings() && (nameLineEdit->text() != mDefaultName|| streetLineEdit->text() != mDefaultStreet ||
+                                    areaLineEdit->text() != mDefaultArea || townLineEdit->text() != mDefaultTown ||
+                                    countyLineEdit->text() != mDefaultCounty || postcodeLineEdit->text() != mDefaultPostcode ||
+                                    phoneLineEdit->text() != mDefaultPhone || emailLineEdit->text() != mDefaultEmail)) {
         QMessageBox::StandardButton button = QMessageBox::warning(this, tr("Unsaved Changes"),
             tr("You have unsaved changes, if you continue they will be lost. Do you want to continue?"),
             QMessageBox::Yes | QMessageBox::No);
@@ -91,12 +143,36 @@ void CustomerForm::setupUI()
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     nameLineEdit = new QLineEdit(this);
-    nameLineEdit->setPlaceholderText(tr("Enter the staff member's name"));
+    nameLineEdit->setPlaceholderText(tr("Enter the customer's name"));
     mainLayout->addWidget(nameLineEdit);
 
-    chargedAtLineEdit = new QLineEdit(this);
-    chargedAtLineEdit->setPlaceholderText(tr("Enter the hourly rate in pounds"));
-    mainLayout->addWidget(chargedAtLineEdit);
+    streetLineEdit = new QLineEdit(this);
+    streetLineEdit->setPlaceholderText(tr("Enter the street address"));
+    mainLayout->addWidget(streetLineEdit);
+
+    areaLineEdit = new QLineEdit(this);
+    areaLineEdit->setPlaceholderText("Enter the area (Optional)");
+    mainLayout->addWidget(areaLineEdit);
+
+    townLineEdit= new QLineEdit(this);
+    townLineEdit->setPlaceholderText("Enter the town (Optional)");
+    mainLayout->addWidget(townLineEdit);
+
+    countyLineEdit = new QLineEdit(this);
+    countyLineEdit->setPlaceholderText("Enter the county (Optional)");
+    mainLayout->addWidget(countyLineEdit);
+
+    postcodeLineEdit = new QLineEdit(this);
+    postcodeLineEdit->setPlaceholderText("Enter the post code");
+    mainLayout->addWidget(postcodeLineEdit);
+
+    phoneLineEdit = new QLineEdit(this);
+    phoneLineEdit->setPlaceholderText("Enter the phone number");
+    mainLayout->addWidget(phoneLineEdit);
+
+    emailLineEdit = new QLineEdit(this);
+    emailLineEdit->setPlaceholderText("Enter the email address");
+    mainLayout->addWidget(emailLineEdit);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout(this);
     mainLayout->addLayout(buttonLayout);

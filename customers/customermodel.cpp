@@ -21,7 +21,7 @@ CustomerModel CustomerModel::load(int id)
 
 CustomerModel::CustomerModel(QString name, AddressModel address, QString phoneNumber, QString email, bool active, int id) :
             mName(name), mAddress(address), mPhoneNumber(phoneNumber), mEmail(email), mActive(active), mId(id) {}
-CustomerModel::CustomerModel() : CustomerModel("", address(), "", "", 1, 0) {}
+CustomerModel::CustomerModel() : CustomerModel("", AddressModel(), "", "", 1, 0) {}
 
 int CustomerModel::id() const
 {

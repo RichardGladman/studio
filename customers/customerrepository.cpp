@@ -8,6 +8,7 @@
 #include "customerrepository.h"
 #include "customermodel.h"
 #include "../address/addressmodel.h"
+#include "qlogging.h"
 
 #include <QSqlQuery>
 
@@ -51,9 +52,11 @@ QList<ListData> CustomerRepository::list(QString searchFor, bool inactive)
 
 CustomerModel CustomerRepository::load(int id) 
 {
+	qWarning() << "HERE";
 	CustomerModel model {};
+	qWarning() << "HERE";
 	QSqlQuery query;
-	
+
 	query.prepare("SELECT * FROM customers WHERE id=?");
 	query.addBindValue(id);
 	
@@ -65,7 +68,7 @@ CustomerModel CustomerRepository::load(int id)
 		model.address(address);
 		model.phoneNumber(query.value(7).toString());
 		model.email(query.value(8).toString());
-		model.active(query.value(3).toInt());
+		model.active(query.value(9).toInt());
 	}
 	
 	return model; 

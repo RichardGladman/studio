@@ -18,6 +18,7 @@ qt_add_executable(studio
     resources.qrc
     common/listdata.h
     about/aboutdialog.h about/aboutdialog.cpp
+    address/addressmodel.h address/addressmodel.cpp
     customers/customerform.h customers/customerform.cpp
     customers/customerframe.h customers/customerframe.cpp
     customers/customermodel.h customers/customermodel.cpp

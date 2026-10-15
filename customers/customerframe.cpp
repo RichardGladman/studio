@@ -10,6 +10,7 @@
 #include "customermodel.h"
 #include "../common/listdata.h"
 
+#include <QDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -140,11 +141,10 @@ void CustomerFrame::handleItemClicked()
  	if (listWidget->currentItem() == nullptr) return;
 	
 	int id = listWidget->currentItem()->data(Qt::UserRole).toInt();
-	QString name = listWidget->currentItem()->text();
 	CustomerModel model = CustomerModel::load(id);
 	
 	deleteButton->setEnabled(true);
-	
+
 	if (model.active()) {
 		deleteButton->setText("Deactivate");
 		deleteButton->disconnect();

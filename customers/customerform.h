@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "qlineedit.h"
 #include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
@@ -25,12 +26,24 @@ private slots:
 
 private:
     QString mDefaultName;
-    int mDefaultChargedAt;
+    QString mDefaultStreet;
+    QString mDefaultArea;
+    QString mDefaultTown;
+    QString mDefaultCounty;
+    QString mDefaultPostcode;
+    QString mDefaultPhone;
+    QString mDefaultEmail;
 
     int mId { };
 
     QLineEdit *nameLineEdit;
-    QLineEdit *chargedAtLineEdit;
+    QLineEdit *streetLineEdit;
+    QLineEdit *areaLineEdit;
+    QLineEdit *townLineEdit;
+    QLineEdit *countyLineEdit;
+    QLineEdit *postcodeLineEdit;
+    QLineEdit *phoneLineEdit;
+    QLineEdit *emailLineEdit;
     QPushButton *saveButton;
 
     void setupUI();

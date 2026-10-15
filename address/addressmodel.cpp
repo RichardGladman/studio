@@ -9,6 +9,7 @@
 
 AddressModel::AddressModel(QString streetAddress, QString area, QString town, QString county, QString postcode):
                             mStreetAddress(streetAddress), mArea(area), mTown(town), mCounty(county), mPostcode(postcode) {}
+AddressModel::AddressModel() : AddressModel("", "", "", "", "") {}
 
 QString AddressModel::streetAddress() const 
 {

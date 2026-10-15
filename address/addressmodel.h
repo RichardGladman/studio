@@ -14,6 +14,7 @@ class AddressModel
 {
 public:
     AddressModel(QString streetAddress, QString area, QString town, QString county, QString postcode);
+    AddressModel();
 
     QString streetAddress() const;
     QString area() const;
