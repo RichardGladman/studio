@@ -6,6 +6,7 @@
  * ===================================== */
 
 #include "taskrepository.h"
+#include "qlogging.h"
 #include "taskmodel.h"
 
 #include <QSqlQuery>
@@ -13,7 +14,11 @@
 
 void TaskRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name VARCHAR(255), description TEXT, project_id INTEGER);";
+	QString sql = "CREATE TABLE IF NOT EXISTS tasks ("
+						"id INTEGER PRIMARY KEY AUTO_INCREMENT, "
+						"name VARCHAR(255), "
+						"description TEXT, "
+						"project_id INTEGER);";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
@@ -118,6 +123,11 @@ bool TaskRepository::insert(TaskModel *model)
 	QSqlQuery query;
 	
 	query.prepare("INSERT INTO tasks(name, description, project_id) VALUES(?, ?, ?)");
+
+	qWarning() << model->name();
+	qWarning() << model->description();
+	qWarning() << model->projectId();
+
 	
 	query.addBindValue(model->name());
 	query.addBindValue(model->description());

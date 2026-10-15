@@ -16,7 +16,7 @@
 
 void TaskTimerRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS tasktimings (id INTEGER PRIMARY KEY, task_id INTEGER, start INTEGER, stop INTEGER);";
+	QString sql = "CREATE TABLE IF NOT EXISTS tasktimings (id INTEGER PRIMARY KEY AUTO_INCREMENT, task_id INTEGER, start BIGINT, stop BIGINT);";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
@@ -43,11 +43,11 @@ bool TaskTimerRepository::start(int taskId, qint64 starttime)
 {
 	QString sql = "INSERT INTO tasktimings (task_id, start, stop) VALUES(?, ?, -1)";
 	QSqlQuery query;
-	
+
 	query.prepare(sql);
 	query.addBindValue(taskId);
 	query.addBindValue(starttime);
-	
+
 	return query.exec();
 }
 
