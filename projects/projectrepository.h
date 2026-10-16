@@ -13,6 +13,7 @@
 
 #include "projectmodel.h"
 #include "../common/listdata.h"
+#include "../customers/customermodel.h"
 
 class ProjectRepository
 {
@@ -20,6 +21,7 @@ public:
 	static void createStore();
 	
 	static QList<ListData> list(QString searchFor, bool inactive = false);
+	static QList<ListData> list(CustomerModel customer, bool inactive = false);
 	static ProjectModel load(int id);
 	
 	static bool insert(ProjectModel *model);

@@ -12,7 +12,13 @@
 
 void ProjectRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), description TEXT, active INTEGER);";
+	QString sql = "CREATE TABLE IF NOT EXISTS projects ("
+					"id INTEGER PRIMARY KEY AUTO_INCREMENT,"
+					"customer_id INTEGER,"
+					"name VARCHAR(255), "
+					"description TEXT, "
+					"active INTEGER,"
+					"FOREIGN KEY (customer_id) REFERENCES customers(id));";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
@@ -34,6 +40,26 @@ QList<ListData> ProjectRepository::list(QString searchFor, bool inactive)
 		query.addBindValue(!inactive);
 	}
 	
+	query.exec();
+	
+	QList<ListData> projects;
+	
+	while (query.next()) {
+		ListData data {query.value(0).toInt(), query.value(1).toString()};
+		projects.push_back(data);
+	}
+	
+	return projects; 
+}
+
+QList<ListData> ProjectRepository::list(CustomerModel customer, bool inactive)
+{
+	QSqlQuery query;
+
+	query.prepare("SELECT id, name FROM Projects WHERE customer_id=? AND active=? ORDER BY name;");
+	query.addBindValue(customer.id());
+	query.addBindValue(!inactive);
+
 	query.exec();
 	
 	QList<ListData> projects;
