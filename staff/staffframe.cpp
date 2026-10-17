@@ -1,11 +1,14 @@
 /* =====================================
- *	frame.cpp
+ *	staffframe.cpp
  *  Richard Muir-Gladman (c) 2026
  *
  *	Licence GPLv3
  * ===================================== */
 
 #include "staffframe.h"
+#include "qboxlayout.h"
+#include "qpushbutton.h"
+#include "resetform.h"
 #include "staffform.h"
 #include "staffmodel.h"
 #include "../common/listdata.h"
@@ -59,16 +62,19 @@ void StaffFrame::setupUI()
 	QPushButton *editButton = new QPushButton(tr("Edit"), this);
 	deleteButton = new QPushButton(tr("Deactivate"), this);
 	deleteButton->setEnabled(false);
+	QPushButton *resetButton = new QPushButton(tr("Set Password"), this);
 
     connect(viewButton, &QPushButton::clicked, this, &StaffFrame::showViewForm);
     connect(addButton, &QPushButton::clicked, this, &StaffFrame::showAddForm);
     connect(editButton, &QPushButton::clicked, this, &StaffFrame::showEditForm);
     connect(deleteButton, &QPushButton::clicked, this, &StaffFrame::deactivate);
+	connect(resetButton, &QPushButton::clicked, this, &StaffFrame::resetPassword);
 	
 	buttonLayout->addWidget(viewButton);
 	buttonLayout->addWidget(addButton);
 	buttonLayout->addWidget(editButton);
 	buttonLayout->addWidget(deleteButton);
+	buttonLayout->addWidget(resetButton);
 
 	mainLayout->addLayout(buttonLayout);
 }
@@ -97,6 +103,14 @@ void StaffFrame::showEditForm()
 	StaffForm *form = new StaffForm(this, listWidget->currentItem()->data(Qt::UserRole).toInt(), "Edit");
 	form->exec();
 	load();
+}
+
+void StaffFrame::resetPassword()
+{
+	if (listWidget->currentItem() == nullptr) return;
+
+	ResetForm *form = new ResetForm(listWidget->currentItem()->data(Qt::UserRole).toInt(), this);
+	form.exec();
 }
 
 void StaffFrame::deactivate()

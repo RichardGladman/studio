@@ -33,6 +33,7 @@ private:
     void showViewForm();
     void deactivate();
     void activate();
+    void resetPassword();
     void handleItemClicked();
 	void load();
 
