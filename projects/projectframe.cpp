@@ -2,7 +2,12 @@
 #include "projectform.h"
 #include "projectframe.h"
 #include "../common/listdata.h"
+#include "../customers/customermodel.h"
 #include "../teams/teamframe.h"
+#include "qcombobox.h"
+#include "qlistwidget.h"
+#include "qlogging.h"
+#include "qvariant.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -16,16 +21,25 @@
 
 ProjectFrame::ProjectFrame(QWidget* parent) : QFrame(parent)
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+	listWidget = new QListWidget(this);
+	loadData();
+
+	QVBoxLayout* mainLayout = new QVBoxLayout(this);
+	
+	customersComboBox = new QComboBox(this);
+	connect(customersComboBox, &QComboBox::currentIndexChanged, this, &ProjectFrame::loadForCustomers);
+	mainLayout->addWidget(customersComboBox);
+	
+	loadCustomerData();
 
 	QGroupBox *groupBox = new QGroupBox(this);
 	groupBox->setTitle("");
 	
 	mainLayout->addWidget(groupBox);
-	
+
 	QHBoxLayout *searchLayout = new QHBoxLayout(this);
 	groupBox->setLayout(searchLayout);
-	
+
 	searchLineEdit = new QLineEdit(this);
 	searchLineEdit->setPlaceholderText(tr("Search for projects"));
 	searchLayout->addWidget(searchLineEdit);
@@ -36,10 +50,6 @@ ProjectFrame::ProjectFrame(QWidget* parent) : QFrame(parent)
 	searchButton = new QPushButton(tr("Search"), this);
 	connect(searchButton, &QPushButton::clicked, this, &ProjectFrame::handleSearchClicked);
 	searchLayout->addWidget(searchButton);
-
-	listWidget = new QListWidget(this);
-	
-	loadData();
 		
 	QHBoxLayout *controlLayout = new QHBoxLayout(this);
 
@@ -141,6 +151,33 @@ void ProjectFrame::loadData(QString searchFor, bool inactive)
 	for (const ListData &project: projects) {
 		QListWidgetItem *item = new QListWidgetItem(project.name, listWidget);
 		item->setData(Qt::UserRole, project.id);
+		listWidget->addItem(item);
+	}
+}
+
+void ProjectFrame::loadCustomerData()
+{
+	QList<ListData> customers = CustomerModel::list("", false);
+
+	customersComboBox->clear();
+	customersComboBox->addItem("Select Customer...");
+	for (const ListData &customer: customers) {
+		customersComboBox->addItem(customer.name, QVariant(customer.id));
+	}
+}
+
+void ProjectFrame::loadForCustomers()
+{
+	listWidget->clear();
+
+	if (customersComboBox->currentText() == "Select Customer...") return;
+
+	CustomerModel customer = CustomerModel::load(customersComboBox->currentData().toInt());
+	QList<ListData> customers = ProjectModel::list(customer);
+
+	for (const ListData &customer: customers) {
+		QListWidgetItem *item = new QListWidgetItem(customer.name, listWidget);
+		item->setData(Qt::UserRole, customer.id);
 		listWidget->addItem(item);
 	}
 }
