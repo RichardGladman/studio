@@ -21,16 +21,18 @@ public:
 	static QList<ListData> list(CustomerModel customer);
 	static ProjectModel load(int id);
 
-	ProjectModel(int id, QString name, QString description);
-	ProjectModel(QString name, QString description);
+	ProjectModel(int id, int customerId, QString name, QString description);
+	ProjectModel(int customerId, QString name, QString description);
 	ProjectModel();
 	
 	int id() const;
+	int customerId() const;
 	QString name() const;
 	QString description() const;
 	int active() const;
 	
 	void id(int id);
+	void customerId(int id);
 	void name(QString name);
 	void description(QString description);
 	void active(int active);
@@ -41,6 +43,7 @@ public:
 	
 private:
 	int mId;
+	int mCustomerId;
 	QString mName;
 	QString mDescription;
 	int mActive;

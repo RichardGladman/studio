@@ -93,8 +93,9 @@ bool ProjectRepository::insert(ProjectModel *model)
 { 
 	QSqlQuery query;
 	
-	query.prepare("INSERT INTO projects(name, description, active) VALUES(?, ?, 1)");
+	query.prepare("INSERT INTO projects(customer_id, name, description, active) VALUES(?, ?, ?, 1)");
 	
+	query.addBindValue(model->customerId());
 	query.addBindValue(model->name());
 	query.addBindValue(model->description());
 	
@@ -105,8 +106,9 @@ bool ProjectRepository::update(ProjectModel *model)
 { 
 	QSqlQuery query;
 
-	query.prepare("UPDATE projects SET name=?, description=? WHERE id=?");
+	query.prepare("UPDATE projects SET customer_id=?, name=?, description=? WHERE id=?");
 
+	query.addBindValue(model->customerId());
 	query.addBindValue(model->name());
 	query.addBindValue(model->description());
 	query.addBindValue(model->id());

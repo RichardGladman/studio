@@ -4,10 +4,6 @@
 #include "../common/listdata.h"
 #include "../customers/customermodel.h"
 #include "../teams/teamframe.h"
-#include "qcombobox.h"
-#include "qlistwidget.h"
-#include "qlogging.h"
-#include "qvariant.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -17,7 +13,6 @@
 #include <QMessageBox>
 
 #include <QDebug>
-#include <qnamespace.h>
 
 ProjectFrame::ProjectFrame(QWidget* parent) : QFrame(parent)
 {
@@ -101,7 +96,7 @@ void ProjectFrame::handleViewClicked()
 
 void ProjectFrame::handleAddClicked()
 {
-	ProjectForm *dialog = new ProjectForm(this);
+	ProjectForm *dialog = new ProjectForm(this,customersComboBox->currentData().toInt(), "add");
 	dialog->exec();
 	loadData();
 }
@@ -160,7 +155,7 @@ void ProjectFrame::loadCustomerData()
 	QList<ListData> customers = CustomerModel::list("", false);
 
 	customersComboBox->clear();
-	customersComboBox->addItem("Select Customer...");
+	customersComboBox->addItem("Select Customer...", QVariant(-1));
 	for (const ListData &customer: customers) {
 		customersComboBox->addItem(customer.name, QVariant(customer.id));
 	}

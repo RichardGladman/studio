@@ -1,6 +1,7 @@
 #ifndef PROJECT_FORM_H
 #define PROJECT_FORM_H
 
+#include "qcombobox.h"
 #include <QDialog>
 #include <QLineEdit>
 #include <QTextEdit>
@@ -20,14 +21,17 @@ private slots:
 private:
     QString mDefaultName;
     QString mDefaultDescription;
+    int mDefaultCustomerId;
 
     int mId { };
 	
+    QComboBox *customersComboBox;
 	QLineEdit *nameLineEdit;
 	QTextEdit *descriptionTextEdit;
 	QPushButton *saveButton;
 	
 	void setupUI();
+    void loadCustomerData();
 };
 
 #endif // ANIMALFORM_H

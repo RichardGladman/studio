@@ -23,13 +23,19 @@ ProjectModel ProjectModel::load(int id)
 	return ProjectRepository::load(id);
 }
 
-ProjectModel::ProjectModel(int id, QString name, QString description) : mId {id}, mName {name}, mDescription {description} {}
-ProjectModel::ProjectModel(QString name, QString description) : ProjectModel {0, name, description} {}
-ProjectModel::ProjectModel() : ProjectModel {0, "", ""} {}
+ProjectModel::ProjectModel(int id, int customerId, QString name, QString description) : 
+							mId {id}, mCustomerId(customerId), mName {name}, mDescription {description} {}
+ProjectModel::ProjectModel(int customerId, QString name, QString description) : ProjectModel {0, customerId, name, description} {}
+ProjectModel::ProjectModel() : ProjectModel {0, 0, "", ""} {}
 
 int ProjectModel::id() const 
 {
 	return mId;
+}
+
+int ProjectModel::customerId() const
+{
+	return mCustomerId;
 }
 
 QString ProjectModel::name() const 
@@ -50,6 +56,11 @@ int ProjectModel::active() const
 void ProjectModel::id(int id) 
 {
 	mId = id;
+}
+
+void ProjectModel::customerId(int customerId)
+{
+	mCustomerId = customerId;
 }
 
 void ProjectModel::name(QString name) {
