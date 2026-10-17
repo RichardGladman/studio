@@ -13,6 +13,11 @@ QList<ListData> ProjectModel::list(QString searchFor, bool inactive)
 	return ProjectRepository::list(searchFor, inactive);
 }
 
+QList<ListData> ProjectModel::list(CustomerModel customer)
+{
+	return ProjectRepository::list(customer);
+}
+
 ProjectModel ProjectModel::load(int id) 
 {
 	return ProjectRepository::load(id);

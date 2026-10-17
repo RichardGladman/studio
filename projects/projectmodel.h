@@ -12,11 +12,13 @@
 #include <QStringList>
 
 #include "../common/listdata.h"
+#include "../customers/customermodel.h"
 
 class ProjectModel
 {
 public:
 	static QList<ListData> list(QString searchFor, bool inactive);
+	static QList<ListData> list(CustomerModel customer);
 	static ProjectModel load(int id);
 
 	ProjectModel(int id, QString name, QString description);
