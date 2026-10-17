@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include "qtmetamacros.h"
-#include "qwidget.h"
+#include <QWidget>
 #include <QDialog>
+#include <QLineEdit>
+#include <QCheckBox>
 
 class ResetForm : public QDialog
 {
@@ -18,4 +19,20 @@ class ResetForm : public QDialog
 public:
     explicit ResetForm(int id, QWidget *parent = nullptr);
     ~ResetForm() = default;
+
+private slots:
+    void handleSaveButtonClicked();
+    void handleCloseButtonClicked();
+
+private:
+    QString mDefaultPassword;
+    bool mDefaultChangePassword;
+
+    int mId;
+
+    QLineEdit *passwordLineEdit;
+    QLineEdit *confirmLineEdit;
+    QCheckBox *changeCheckBox;
+
+    void setupUI();
 };
