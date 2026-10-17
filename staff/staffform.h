@@ -27,6 +27,8 @@ private slots:
     void handleCloseButtonClicked();
 
 private:
+    QString mPassword;
+    bool mChangePassword;
     QString mDefaultName;
     QString mDefaultEmail;
     EmployeeType mDefaultType;

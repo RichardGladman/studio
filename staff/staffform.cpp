@@ -39,6 +39,8 @@ StaffForm::StaffForm(QWidget* parent, int id, QString mode)
         chargedAtLineEdit->setText(QString::number(model.chargedAt()));
 
         mId = id;
+        mPassword = model.password();
+        mChangePassword = model.changePassword();
         mDefaultName = model.name();
         mDefaultEmail = model.email();
         mDefaultType = model.type();
@@ -68,7 +70,7 @@ void StaffForm::handleSaveButtonClicked()
         return;
     }
 
-    StaffModel model { name, email, static_cast<EmployeeType>(staffType), chargedAt, 1, mId };
+    StaffModel model { name, email, mPassword, mChangePassword, static_cast<EmployeeType>(staffType), chargedAt, 1, mId };
 
     if (model.save()) {
         if (mId == 0) {
