@@ -24,6 +24,7 @@ extern SettingsModel settings;
 StaffForm::StaffForm(QWidget* parent, int id, QString mode)
     : QDialog(parent)
     , mDefaultName { "" }
+    , mDefaultEmail("")
     , mDefaultType { 0 }
     , mDefaultChargedAt {0}
 {
@@ -32,17 +33,21 @@ StaffForm::StaffForm(QWidget* parent, int id, QString mode)
     if (id != 0) {
         StaffModel model = StaffModel::load(id);
         nameLineEdit->setText(model.name());
+        emailLineEdit->setText(model.email());
         int index = typeComboBox->findData(static_cast<int>(model.type()));
         typeComboBox->setCurrentIndex(index);
         chargedAtLineEdit->setText(QString::number(model.chargedAt()));
+
         mId = id;
         mDefaultName = model.name();
+        mDefaultEmail = model.email();
         mDefaultType = model.type();
         mDefaultChargedAt = model.chargedAt();
     }
 
     if (mode == "view") {
         nameLineEdit->setReadOnly(true);
+        emailLineEdit->setReadOnly(true);
         typeComboBox->setEnabled(false);
         chargedAtLineEdit->setReadOnly(true);
         saveButton->setVisible(false);
@@ -53,6 +58,7 @@ StaffForm::StaffForm(QWidget* parent, int id, QString mode)
 void StaffForm::handleSaveButtonClicked()
 {
     QString name = nameLineEdit->text();
+    QString email = emailLineEdit->text();
     int staffType = typeComboBox->currentData().toInt();
     int chargedAt = chargedAtLineEdit->text().toInt();
     
@@ -62,11 +68,12 @@ void StaffForm::handleSaveButtonClicked()
         return;
     }
 
-    StaffModel model { name, static_cast<EmployeeType>(staffType), chargedAt, 1, mId };
+    StaffModel model { name, email, static_cast<EmployeeType>(staffType), chargedAt, 1, mId };
 
     if (model.save()) {
         if (mId == 0) {
             nameLineEdit->clear();
+            emailLineEdit->clear();
             typeComboBox->setCurrentIndex(0);
             chargedAtLineEdit->clear();
         } else {
@@ -74,6 +81,7 @@ void StaffForm::handleSaveButtonClicked()
         }
 
         mDefaultName = model.name();
+        mDefaultEmail = model.email();
         mDefaultType = model.type();
         mDefaultChargedAt = model.chargedAt();
  
@@ -85,8 +93,8 @@ void StaffForm::handleSaveButtonClicked()
 void StaffForm::handleCloseButtonClicked()
 {
     int staffType = typeComboBox->currentData().toInt();
-    if (settings.showWarnings() && (nameLineEdit->text() != mDefaultName || staffType != static_cast<int>(mDefaultType) ||
-            chargedAtLineEdit->text().toInt() != mDefaultChargedAt)) {
+    if (settings.showWarnings() && (nameLineEdit->text() != mDefaultName || emailLineEdit->text() != mDefaultEmail ||
+            staffType != static_cast<int>(mDefaultType) || chargedAtLineEdit->text().toInt() != mDefaultChargedAt)) {
         QMessageBox::StandardButton button = QMessageBox::warning(this, tr("Unsaved Changes"),
             tr("You have unsaved changes, if you continue they will be lost. Do you want to continue?"),
             QMessageBox::Yes | QMessageBox::No);
@@ -106,6 +114,10 @@ void StaffForm::setupUI()
     nameLineEdit = new QLineEdit(this);
     nameLineEdit->setPlaceholderText(tr("Enter the staff member's name"));
     mainLayout->addWidget(nameLineEdit);
+
+    emailLineEdit = new QLineEdit(this);
+    emailLineEdit->setPlaceholderText(tr("Enter the email address"));
+    mainLayout->addWidget(emailLineEdit);
 
     typeComboBox = new QComboBox(this);
 

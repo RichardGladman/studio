@@ -28,12 +28,14 @@ private slots:
 
 private:
     QString mDefaultName;
+    QString mDefaultEmail;
     EmployeeType mDefaultType;
     int mDefaultChargedAt;
 
     int mId { };
 
     QLineEdit *nameLineEdit;
+    QLineEdit *emailLineEdit;
     QComboBox *typeComboBox;
     QLineEdit *chargedAtLineEdit;
     QPushButton *saveButton;
