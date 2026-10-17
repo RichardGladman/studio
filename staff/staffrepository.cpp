@@ -14,7 +14,7 @@
 void StaffRepository::createStore() 
 {
 	QString sql = "CREATE TABLE IF NOT EXISTS staff (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), "
-					"employee_type INTEGER, charged_at INTEGER, active INTEGER);";
+					"password VARCHAR(255), change_password INTEGER, employee_type INTEGER, charged_at INTEGER, active INTEGER);";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
@@ -60,9 +60,11 @@ StaffModel StaffRepository::load(int id)
 		model.id(query.value(0).toInt());
 		model.name(query.value(1).toString());
 		model.email(query.value(2).toString());
-		model.type(static_cast<EmployeeType>(query.value(3).toInt()));
-		model.chargedAt(query.value(4).toInt());
-		model.active(query.value(5).toInt());
+		model.password(query.value(3).toString());
+		model.changePassword(query.value(4).toBool());
+		model.type(static_cast<EmployeeType>(query.value(5).toInt()));
+		model.chargedAt(query.value(6).toInt());
+		model.active(query.value(7).toInt());
 	}
 	
 	return model; 
@@ -72,10 +74,13 @@ bool StaffRepository::insert(StaffModel *model)
 { 
 	QSqlQuery query;
 	
-	query.prepare("INSERT INTO staff(name, email, employee_type, charged_at, active) VALUES(?, ?, ?, ?, 1)");
+	query.prepare("INSERT INTO staff(name, email, password, password_changed, employee_type, charged_at, active) "
+					"VALUES(?, ?, ?, ?, ?, ?, 1)");
 	
 	query.addBindValue(model->name());
 	query.addBindValue(model->email());
+	query.addBindValue(model->password());
+	query.addBindValue(model->changePassword());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
 	
@@ -86,10 +91,12 @@ bool StaffRepository::update(StaffModel *model)
 { 
 	QSqlQuery query;
 
-	query.prepare("UPDATE staff SET name=?, email=?, employee_type=?, charged_at=? WHERE id=?");
+	query.prepare("UPDATE staff SET name=?, email=?, password=?, password_changed=?, employee_type=?, charged_at=? WHERE id=?");
 
 	query.addBindValue(model->name());
 	query.addBindValue(model->email());
+	query.addBindValue(model->password());
+	query.addBindValue(model->changePassword());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
 	query.addBindValue(model->id());

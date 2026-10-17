@@ -20,9 +20,10 @@ StaffModel StaffModel::load(int id)
     return StaffRepository::load(id);
 }
 
-StaffModel::StaffModel(QString name, QString email, EmployeeType type, int chargedAt, bool active, int id) :
-            mName {name}, mEmail {email}, mType {type}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
-StaffModel::StaffModel() : mName {""}, mEmail {""}, mType {-1}, mChargedAt {0}, mActive {1}, mId {0} {}
+StaffModel::StaffModel(QString name, QString email, QString password, bool changePassword, EmployeeType type, int chargedAt, bool active, 
+    int id) : mName {name}, mEmail {email}, mPassword(password), mChangePassword(changePassword), mType {type}, mChargedAt {chargedAt}, 
+    mActive {active}, mId {id} {}
+StaffModel::StaffModel() : StaffModel("", "", "", false, EmployeeType::Employee, 0, false, 0) {}
 
 int StaffModel::id() const
 {
@@ -37,6 +38,16 @@ QString StaffModel::name() const
 QString StaffModel::email() const
 {
     return mEmail;
+}
+
+QString StaffModel::password() const
+{
+    return mPassword;
+}
+
+bool StaffModel::changePassword() const
+{
+    return mChangePassword;
 }
 
 EmployeeType StaffModel::type() const
@@ -67,6 +78,16 @@ void StaffModel::name(const QString name)
 void StaffModel::email(const QString email)
 {
     mEmail = email;
+}
+
+void StaffModel::password(const QString password)
+{
+    mPassword = password;
+}
+
+void StaffModel::changePassword(const bool changePassword)
+{
+    mChangePassword = changePassword;
 }
 
 void StaffModel::type(EmployeeType type)

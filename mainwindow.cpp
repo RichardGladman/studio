@@ -7,7 +7,6 @@
 #include "mainwindow.h"
 #include "about/aboutdialog.h"
 #include "dbinitialiser.h"
-#include "qaction.h"
 #include "reports/bystartdateframe.h"
 #include "settings/settingsmodel.h"
 #include "settings/settingsframe.h"

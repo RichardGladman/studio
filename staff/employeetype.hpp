@@ -8,5 +8,5 @@
 #pragma once
 
 enum class EmployeeType{
-    Employee, Contractor
+    Employee, Contractor, Customer
 };
