@@ -82,6 +82,8 @@ void ProjectFrame::handleSearchClicked()
 	bool inactive = inactiveCheckBox->isChecked();
 	
 	loadData(searchFor, inactive);
+
+	customersComboBox->setCurrentIndex(0);
 }
 
 void ProjectFrame::handleViewClicked()

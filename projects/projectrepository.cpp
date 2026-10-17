@@ -56,7 +56,7 @@ QList<ListData> ProjectRepository::list(CustomerModel customer, bool inactive)
 {
 	QSqlQuery query;
 
-	query.prepare("SELECT id, name FROM Projects WHERE customer_id=? AND active=? ORDER BY name;");
+	query.prepare("SELECT id, name FROM projects WHERE customer_id=? AND active=? ORDER BY name");
 	query.addBindValue(customer.id());
 	query.addBindValue(!inactive);
 
@@ -82,8 +82,9 @@ ProjectModel ProjectRepository::load(int id)
 	
 	if (query.exec() && query.next()) {
 		model.id(query.value(0).toInt());
-		model.name(query.value(1).toString());
-		model.description(query.value(2).toString());
+		model.customerId(query.value(1).toInt());
+		model.name(query.value(2).toString());
+		model.description(query.value(3).toString());
 	}
 	
 	return model; 
