@@ -110,7 +110,7 @@ void StaffFrame::resetPassword()
 	if (listWidget->currentItem() == nullptr) return;
 
 	ResetForm *form = new ResetForm(listWidget->currentItem()->data(Qt::UserRole).toInt(), this);
-	form.exec();
+	form->exec();
 }
 
 void StaffFrame::deactivate()
