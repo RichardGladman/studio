@@ -18,7 +18,9 @@ void TaskRepository::createStore()
 						"id INTEGER PRIMARY KEY AUTO_INCREMENT, "
 						"name VARCHAR(255), "
 						"description TEXT, "
-						"project_id INTEGER);";
+						"project_id INTEGER,"
+						"FOREIGN KEY(project_id) REFERENCES projects(id)"
+					");";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();

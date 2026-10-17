@@ -16,7 +16,9 @@
 
 void TaskTimerRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS tasktimings (id INTEGER PRIMARY KEY AUTO_INCREMENT, task_id INTEGER, start BIGINT, stop BIGINT);";
+	QString sql = "CREATE TABLE IF NOT EXISTS tasktimings ("
+					"id INTEGER PRIMARY KEY AUTO_INCREMENT, task_id INTEGER, start BIGINT, stop BIGINT,"
+					"FOREIGN KEY(task_id) REFERENCES tasks(id));";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
