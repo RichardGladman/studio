@@ -22,6 +22,7 @@ public:
 
     static bool insert(StaffModel *model);
     static bool update(StaffModel *model);
+    static bool reset(StaffModel *model);
     static bool activate(int id);
     static bool deactivate(int id);
 };

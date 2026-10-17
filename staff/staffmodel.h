@@ -43,6 +43,7 @@ public:
 	bool save();
 	bool activate();
 	bool deactivate();
+	bool reset();
 
 private:
 	int mId;

@@ -114,6 +114,11 @@ bool StaffModel::save()
     }
 }
 
+bool StaffModel::reset()
+{
+    return StaffRepository::reset(this);
+}
+
 bool StaffModel::activate() 
 {
     return StaffRepository::activate(mId);

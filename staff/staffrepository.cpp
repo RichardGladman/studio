@@ -7,6 +7,7 @@
 
 #include "staffrepository.h"
 #include "employeetype.hpp"
+#include "qsqlquery.h"
 #include "staffmodel.h"
 
 #include <QSqlQuery>
@@ -74,13 +75,10 @@ bool StaffRepository::insert(StaffModel *model)
 { 
 	QSqlQuery query;
 	
-	query.prepare("INSERT INTO staff(name, email, password, password_changed, employee_type, charged_at, active) "
-					"VALUES(?, ?, ?, ?, ?, ?, 1)");
+	query.prepare("INSERT INTO staff(name, email, employee_type, charged_at, active) VALUES(?, ?, ?, ?, 1)");
 	
 	query.addBindValue(model->name());
 	query.addBindValue(model->email());
-	query.addBindValue(model->password());
-	query.addBindValue(model->changePassword());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
 	
@@ -91,14 +89,25 @@ bool StaffRepository::update(StaffModel *model)
 { 
 	QSqlQuery query;
 
-	query.prepare("UPDATE staff SET name=?, email=?, password=?, password_changed=?, employee_type=?, charged_at=? WHERE id=?");
+	query.prepare("UPDATE staff SET name=?, email=?, employee_type=?, charged_at=? WHERE id=?");
 
 	query.addBindValue(model->name());
 	query.addBindValue(model->email());
-	query.addBindValue(model->password());
-	query.addBindValue(model->changePassword());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
+	query.addBindValue(model->id());
+
+	return query.exec();
+}
+
+bool StaffRepository::reset(StaffModel *model)
+{
+	QSqlQuery query;
+
+	query.prepare("UPDATE staff SET password=?, change_password=1, active=1 WHERE id=?");
+
+	query.addBindValue(model->password());
+	query.addBindValue(model->changePassword());
 	query.addBindValue(model->id());
 
 	return query.exec();
