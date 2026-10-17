@@ -19,17 +19,19 @@ public:
 	static QList<ListData> list(QString searchFor, bool inactive);
 	static StaffModel load(int id);
 
-	StaffModel(QString name, EmployeeType type, int chargedAt, bool active, int id = 0);
+	StaffModel(QString name, QString email, EmployeeType type, int chargedAt, bool active, int id = 0);
 	StaffModel();
 
 	int id() const;
 	QString name() const;
+	QString email() const;
 	EmployeeType type() const;
 	int chargedAt() const;
 	bool active() const;
 
 	void id(const int id);
 	void name(const QString name);
+	void email(const QString email);
 	void type(const EmployeeType type);
 	void chargedAt(int chargedAt);
 	void active(bool active);
@@ -41,6 +43,7 @@ public:
 private:
 	int mId;
 	QString mName;
+	QString mEmail;
 	EmployeeType mType;
 	int mChargedAt;
 	bool mActive;

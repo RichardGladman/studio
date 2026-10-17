@@ -13,8 +13,8 @@
 
 void StaffRepository::createStore() 
 {
-	QString sql = "CREATE TABLE IF NOT EXISTS staff (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), member_type INTEGER, "
-					"charged_at INTEGER, active INTEGER);";
+	QString sql = "CREATE TABLE IF NOT EXISTS staff (id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), "
+					"employee_type INTEGER, charged_at INTEGER, active INTEGER);";
 	QSqlQuery query;
 	query.prepare(sql);
 	query.exec();
@@ -59,9 +59,10 @@ StaffModel StaffRepository::load(int id)
 	if (query.exec() && query.next()) {
 		model.id(query.value(0).toInt());
 		model.name(query.value(1).toString());
-		model.type(static_cast<EmployeeType>(query.value(2).toInt()));
-		model.chargedAt(query.value(3).toInt());
-		model.active(query.value(4).toInt());
+		model.email(query.value(2).toString());
+		model.type(static_cast<EmployeeType>(query.value(3).toInt()));
+		model.chargedAt(query.value(4).toInt());
+		model.active(query.value(5).toInt());
 	}
 	
 	return model; 
@@ -71,9 +72,10 @@ bool StaffRepository::insert(StaffModel *model)
 { 
 	QSqlQuery query;
 	
-	query.prepare("INSERT INTO staff(name, member_type, charged_at, active) VALUES(?, ?, ?, 1)");
+	query.prepare("INSERT INTO staff(name, email, employee_type, charged_at, active) VALUES(?, ?, ?, ?, 1)");
 	
 	query.addBindValue(model->name());
+	query.addBindValue(model->email());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
 	
@@ -84,9 +86,10 @@ bool StaffRepository::update(StaffModel *model)
 { 
 	QSqlQuery query;
 
-	query.prepare("UPDATE staff SET name=?, member_type=?, charged_at=? WHERE id=?");
+	query.prepare("UPDATE staff SET name=?, email=?, employee_type=?, charged_at=? WHERE id=?");
 
 	query.addBindValue(model->name());
+	query.addBindValue(model->email());
 	query.addBindValue(static_cast<int>(model->type()));
 	query.addBindValue(model->chargedAt());
 	query.addBindValue(model->id());

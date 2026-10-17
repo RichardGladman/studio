@@ -7,6 +7,7 @@
 
 #include "staffmodel.h"
 #include "employeetype.hpp"
+#include "qobject.h"
 #include "staffrepository.h"
 
 QList<ListData> StaffModel::list(QString searchFor, bool inactive)
@@ -19,9 +20,9 @@ StaffModel StaffModel::load(int id)
     return StaffRepository::load(id);
 }
 
-StaffModel::StaffModel(QString name, EmployeeType type, int chargedAt, bool active, int id) :
-            mName {name}, mType {type}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
-StaffModel::StaffModel() : mName {""}, mType {-1}, mChargedAt {0}, mActive {1}, mId {0} {}
+StaffModel::StaffModel(QString name, QString email, EmployeeType type, int chargedAt, bool active, int id) :
+            mName {name}, mEmail {email}, mType {type}, mChargedAt {chargedAt}, mActive {active}, mId {id} {}
+StaffModel::StaffModel() : mName {""}, mEmail {""}, mType {-1}, mChargedAt {0}, mActive {1}, mId {0} {}
 
 int StaffModel::id() const
 {
@@ -31,6 +32,11 @@ int StaffModel::id() const
 QString StaffModel::name() const
 {
     return mName;
+}
+
+QString StaffModel::email() const
+{
+    return mEmail;
 }
 
 EmployeeType StaffModel::type() const
@@ -56,6 +62,11 @@ void StaffModel::id(int id)
 void StaffModel::name(const QString name)
 {
     mName = name;
+}
+
+void StaffModel::email(const QString email)
+{
+    mEmail = email;
 }
 
 void StaffModel::type(EmployeeType type)
