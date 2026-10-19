@@ -33,6 +33,7 @@ qt_add_executable(studio
     settings/settingsmodel.h settings/settingsmodel.cpp
     settings/settingsrepository.h settings/settingsrepository.cpp
     settings/settingsframe.h settings/settingsframe.cpp
+    staff/resetform.h staff/resetform.cpp
     staff/staffform.h staff/staffform.cpp
     staff/staffframe.h staff/staffframe.cpp
     staff/staffmodel.h staff/staffmodel.cpp

@@ -34,7 +34,6 @@ CustomerForm::CustomerForm(QWidget* parent, int id, QString mode)
     setupUI();
 
     if (id != 0) {
-        qCritical() << "HERE";
         CustomerModel model = CustomerModel::load(id);
         nameLineEdit->setText(model.name());
         streetLineEdit->setText(model.address().streetAddress());
