@@ -10,7 +10,6 @@
 #include <QWidget>
 #include <QDialog>
 #include <QLineEdit>
-#include <QCheckBox>
 
 class ResetForm : public QDialog
 {
@@ -25,14 +24,10 @@ private slots:
     void handleCloseButtonClicked();
 
 private:
-    QString mDefaultPassword;
-    bool mDefaultChangePassword;
-
     int mId;
 
     QLineEdit *passwordLineEdit;
     QLineEdit *confirmLineEdit;
-    QCheckBox *changeCheckBox;
 
     void setupUI();
 };
