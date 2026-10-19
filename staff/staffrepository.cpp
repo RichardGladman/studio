@@ -107,7 +107,6 @@ bool StaffRepository::reset(StaffModel *model)
 	query.prepare("UPDATE staff SET password=?, change_password=1, active=1 WHERE id=?");
 
 	query.addBindValue(model->password());
-	query.addBindValue(model->changePassword());
 	query.addBindValue(model->id());
 
 	return query.exec();
