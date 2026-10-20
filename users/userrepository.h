@@ -13,5 +13,6 @@
 
 class UserRepository
 {
-    UserModel login(QString email, QString password);
+public:
+    static void login(QString email, QString password);
 };

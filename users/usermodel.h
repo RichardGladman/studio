@@ -25,7 +25,7 @@ public:
     void active(bool active);
     void loggedIn(bool loggedIn);
 
-    UserModel login(QString email, QString password);
+    void login(QString email, QString password);
     void logout();
 
 private:
