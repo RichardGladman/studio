@@ -11,7 +11,7 @@
 class UserModel
 {
 public:
-    UserModel(int id, QString name, QString email, bool active);
+    UserModel(int id, QString name, QString email, bool active, bool loggedIn);
 
     int id();
     QString name();
