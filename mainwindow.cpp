@@ -7,6 +7,8 @@
 #include "mainwindow.h"
 #include "about/aboutdialog.h"
 #include "dbinitialiser.h"
+#include "qlabel.h"
+#include "qlogging.h"
 #include "reports/bystartdateframe.h"
 #include "settings/settingsmodel.h"
 #include "settings/settingsframe.h"
@@ -15,6 +17,8 @@
 #include "reports/projecttaskframe.h"
 #include "staff/staffframe.h"
 #include "customers/customerframe.h"
+#include "users/usermodel.h"
+#include "users/userutils.h"
 
 #include <QApplication>
 #include <QVBoxLayout>
@@ -26,6 +30,7 @@
 #include <QSqlDatabase>
 
 SettingsModel settings;
+UserModel user(0, "", "", false, false);
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -60,13 +65,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	QIcon icon = QIcon(pixmap);
 
 	setWindowIcon(icon);
+
+	UserUtils::renderLoginForm(this);
+	qWarning() << user.loggedIn();
 	
 	QWidget *centralWidget = new QWidget(this);
 	setCentralWidget(centralWidget);
 	
 	createMenu();
 	
-	QVBoxLayout *mainLayout = new QVBoxLayout(this);
+	loggedInAs = (user.loggedIn()) ? " (" + user.name() + ")" : "";
 }
 
 MainWindow::~MainWindow() = default;
@@ -77,7 +85,7 @@ void MainWindow::createMenu()
 	QMenu *fileMenu = menuBar->addMenu(tr("&File"));
 	
 	QAction *settingsAction = new QAction(tr("&Settings"), this);
-	QAction *exitAction = new QAction(tr("E&xit"), this);
+	QAction *exitAction = new QAction(tr("Log Out and E&xit"), this);
 	
 	connect(settingsAction, &QAction::triggered, this, &MainWindow::handleSettingsAction);
 	connect(exitAction, &QAction::triggered, this, &QApplication::quit);
@@ -133,35 +141,35 @@ void MainWindow::createMenu()
 void ::MainWindow::handleSettingsAction()
 {
 	SettingsFrame *frame = new SettingsFrame(this);
-	setWindowTitle(tr("Studio:- Settings"));
+	setWindowTitle(tr("Studio:- Settings") + loggedInAs);
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleProjectsAction()
 {
 	ProjectFrame *frame = new ProjectFrame(this);
-	setWindowTitle(tr("Studio:- Projects"));
+	setWindowTitle(tr("Studio:- Projects") + loggedInAs);
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleTasksAction()
 {
 	TaskFrame *frame = new TaskFrame(this);
-	setWindowTitle("Studio:- Tasks");
+	setWindowTitle(tr("Studio:- Tasks") + loggedInAs);
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleProjectsTaskAction()
 {
 	ProjectTaskFrame *frame = new ProjectTaskFrame(this);
-	setWindowTitle("Studio:- By Project and Tasks");
+	setWindowTitle(tr("Studio:- By Project and Tasks") + loggedInAs);
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleByStartDateAction()
 {
 	ByStartDateFrame *frame = new ByStartDateFrame(this);
-	setWindowTitle("Studio:- By Start Date");
+	setWindowTitle(tr("Studio:- By Start Date") + loggedInAs);
 	setCentralWidget(frame);
 }
 
@@ -174,19 +182,19 @@ void MainWindow::handleAboutAction()
 
 void MainWindow::handleAboutQtAction()
 {
-	QMessageBox::aboutQt(this, "About Qt");
+	QMessageBox::aboutQt(this, tr("About Qt"));
 }
 
 void MainWindow::handleStaffAction()
 {
 	StaffFrame *frame = new StaffFrame(this);
-	setWindowTitle("Studio:- Staff");
+	setWindowTitle(tr("Studio:- Staff") + loggedInAs);
 	setCentralWidget(frame);
 }
 
 void MainWindow::handleCustomerAction()
 {
 	CustomerFrame *frame = new CustomerFrame();
-	setWindowTitle(tr("Studio:- Customers"));
+	setWindowTitle(tr("Studio:- Customers") + loggedInAs);
 	setCentralWidget(frame);
 }

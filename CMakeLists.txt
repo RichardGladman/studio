@@ -50,7 +50,8 @@ qt_add_executable(studio
     teams/teamrepository.h teams/teamrepository.cpp
     users/loginform.h users/loginform.cpp
     users/usermodel.h users/usermodel.cpp
-    users/userrepository.h users/userrepository.cpp    
+    users/userrepository.h users/userrepository.cpp 
+    users/userutils.h users/userutils.cpp   
 )
 
 target_link_libraries(studio

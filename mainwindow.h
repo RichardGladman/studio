@@ -11,6 +11,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 private:
+	QString loggedInAs;
 	void createMenu();
 	
 private slots:
