@@ -30,10 +30,12 @@ void LoginForm::handleLoginButtonClicked()
 {
     static int attempts = 0;
 
-    QString username = usernameLineEdit->text();
-    QString password = QCryptographicHash::hash(usernameLineEdit->text().toUtf8(), QCryptographicHash::Sha256);
+    QString email = emailLineEdit->text();
+    QString password = QCryptographicHash::hash(passwordLineEdit->text().toUtf8(), QCryptographicHash::Sha256).toBase64();
 
-    user.login(usernameLineEdit->text(), password);
+    user.login(email, password);
+
+
 
     if (user.loggedIn()) {
         accept();
@@ -59,9 +61,9 @@ void LoginForm::setupUI()
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    usernameLineEdit = new QLineEdit(this);
-    usernameLineEdit->setPlaceholderText(tr("Enter your email address"));
-    mainLayout->addWidget(usernameLineEdit);
+    emailLineEdit = new QLineEdit(this);
+    emailLineEdit->setPlaceholderText(tr("Enter your email address"));
+    mainLayout->addWidget(emailLineEdit);
 
     passwordLineEdit = new QLineEdit(this);
     passwordLineEdit->setPlaceholderText(tr("Enter new password"));

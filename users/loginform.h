@@ -25,7 +25,7 @@ private slots:
     void handleCloseButtonClicked();
 
 private:
-    QLineEdit *usernameLineEdit;
+    QLineEdit *emailLineEdit;
     QLineEdit *passwordLineEdit;
 
     void setupUI();

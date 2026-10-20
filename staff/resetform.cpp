@@ -38,7 +38,7 @@ void ResetForm::handleSaveButtonClicked()
         return;
     }
 
-    password = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256);
+    password = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toBase64();
 
     StaffModel staff = StaffModel::load(mId);
     staff.password(password);
