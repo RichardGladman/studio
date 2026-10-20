@@ -17,6 +17,13 @@ public:
     QString name();
     QString email();
     bool active();
+    bool loggedIn();
+
+    void id(int id);
+    void name(QString name);
+    void email(QString email);
+    void active(bool active);
+    void loggedIn(bool loggedIn);
 
     UserModel login(QString email, QString password);
     void logout();
@@ -26,4 +33,5 @@ private:
     QString mName;
     QString mEmail;
     bool mActive;
+    bool mLoggedIn;
 };
