@@ -7,7 +7,6 @@
 #include "mainwindow.h"
 #include "about/aboutdialog.h"
 #include "dbinitialiser.h"
-#include "qlabel.h"
 #include "qlogging.h"
 #include "reports/bystartdateframe.h"
 #include "settings/settingsmodel.h"
@@ -65,16 +64,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	QIcon icon = QIcon(pixmap);
 
 	setWindowIcon(icon);
-
-	UserUtils::renderLoginForm(this);
-	qWarning() << user.loggedIn();
 	
-	QWidget *centralWidget = new QWidget(this);
-	setCentralWidget(centralWidget);
+	UserUtils::renderLoginForm(this);
 	
 	createMenu();
-	
-	loggedInAs = (user.loggedIn()) ? " (" + user.name() + ")" : "";
+	setMenuState(false);
+
+	if (user.loggedIn()) {
+		loggedInAs = " (" + user.name() + ")";
+		setMenuState(true);
+	}
 }
 
 MainWindow::~MainWindow() = default;
@@ -85,11 +84,14 @@ void MainWindow::createMenu()
 	QMenu *fileMenu = menuBar->addMenu(tr("&File"));
 	
 	QAction *settingsAction = new QAction(tr("&Settings"), this);
-	QAction *exitAction = new QAction(tr("Log Out and E&xit"), this);
+	loginAction = new QAction(tr("&Login"), this);
+	QAction *exitAction = new QAction(tr("E&xit"), this);
 	
 	connect(settingsAction, &QAction::triggered, this, &MainWindow::handleSettingsAction);
+	connect(loginAction, &QAction::triggered, this, &MainWindow::handleLoginClicked);
 	connect(exitAction, &QAction::triggered, this, &QApplication::quit);
 	
+	fileMenu->addAction(loginAction);
 	fileMenu->addAction(settingsAction);
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
@@ -136,6 +138,17 @@ void MainWindow::createMenu()
 	
 	helpMenu->addAction(aboutAction);
 	helpMenu->addAction(aboutQtAction);
+}
+
+void MainWindow::setMenuState(bool enabled)
+{
+	for (QAction *action: menuBar()->actions()) {
+		if (action->text() != "&File") {
+			action->setEnabled(enabled);
+		}
+	}
+
+	loginAction->setEnabled(!enabled);
 }
 
 void ::MainWindow::handleSettingsAction()
@@ -197,4 +210,12 @@ void MainWindow::handleCustomerAction()
 	CustomerFrame *frame = new CustomerFrame();
 	setWindowTitle(tr("Studio:- Customers") + loggedInAs);
 	setCentralWidget(frame);
+}
+
+void MainWindow::handleLoginClicked()
+{
+	UserUtils::renderLoginForm(this);
+	if (user.loggedIn()) {
+		setMenuState(true);
+	}
 }
